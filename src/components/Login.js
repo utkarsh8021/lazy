@@ -1,28 +1,137 @@
-import React, { Component } from "react";
-import TextField from "@material-ui/core/TextField";
+import React, { makeStyles } from "react";
+import {
+  Button,
+  TextField,
+  Grid,
+  Paper,
+  AppBar,
+  Typography,
+  Toolbar,
+  Link,
+} from "@material-ui/core";
 
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { username: "", password: "", authflag: 1 };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleChange(event) {
+    this.setState({
+      username: event.state.username,
+      password: event.state.password,
+    });
+  }
+  handleSubmit(event) {
+    event.preventDefault();
+    if (
+      this.state.username == "admin@littech.in" &&
+      this.state.password == "secret"
+    ) {
+      this.props.history.push("/home");
+    } else {
+      alert("Incorrect Credntials!");
+    }
+  }
 
-export default function Login() {
-  return (
-    <form noValidate autoComplete="off">
-      <TextField
-        id="outlined-secondary"
-        label="Enter email"
-        variant="outlined"
-        color="secondary"
-      />
-      <TextField
-        id="outlined-secondary"
-        label="Email password"
-        variant="outlined"
-        color="secondary"
-      />
-
-      <Button type="button" color="primary">
-        Log in
-      </Button>
-    </form>
-  );
+  render() {
+    return (
+      <div>
+        <AppBar position="static" alignitems="center" color="primary">
+          <Toolbar>
+            <Grid container justify="center" wrap="wrap">
+              <Grid item>
+                <Typography variant="h6">hello</Typography>
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </AppBar>
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+        >
+          <Grid item>
+            <Grid
+              container
+              direction="column"
+              justify="center"
+              spacing={2}
+              className="login-form"
+            >
+              <Paper
+                variant="elevation"
+                elevation={2}
+                className="login-background"
+              >
+                <Grid item>
+                  <Typography component="h1" variant="h5">
+                    Sign in
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <form onSubmit={this.handleSubmit}>
+                    <Grid container direction="column" spacing={2}>
+                      <Grid item>
+                        <TextField
+                          type="email"
+                          placeholder="Email"
+                          fullWidth
+                          name="username"
+                          variant="outlined"
+                          value={this.state.username}
+                          onChange={(event) =>
+                            this.setState({
+                              [event.target.name]: event.target.value,
+                            })
+                          }
+                          required
+                          autoFocus
+                        />
+                      </Grid>
+                      <Grid item>
+                        <TextField
+                          type="password"
+                          placeholder="Password"
+                          fullWidth
+                          name="password"
+                          variant="outlined"
+                          value={this.state.password}
+                          onChange={(event) =>
+                            this.setState({
+                              [event.target.name]: event.target.value,
+                            })
+                          }
+                          required
+                        />
+                      </Grid>
+                      <Grid item>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          type="submit"
+                          className="button-block"
+                        >
+                          Submit
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </form>
+                </Grid>
+                <Grid item>
+                  <Link href="#" variant="body2">
+                    Forgot Password?
+                  </Link>
+                </Grid>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Grid>
+      </div>
+    );
+  }
 }
+export default Login;
